@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // URL del backend
-const BASE_URL = "http://localhost:8000/api/";
+const BASE_URL = "https://smspy-backend-pre.onrender.com/api/";
 
 // Obtenemos el token desde localStorage
 
@@ -47,5 +47,6 @@ api.interceptors.response.use(
 
 export default api;
 
-// Crea una instancia de Axios con base en http://localhost:8000/api/
+// FOR PRE STAGING
+// Crea una instancia de Axios con base en const BASE_URL = "https://smspy-backend-pre.onrender.com/api/";
 // Añade automáticamente el token Bearer ACCESS_TOKEN a todas las peticiones si el token está guardado en localStorage
