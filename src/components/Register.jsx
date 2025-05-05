@@ -14,7 +14,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     try {
       // 1. Registro de usuario
       const response = await api.post("register/", {
@@ -23,34 +23,42 @@ function Register() {
         password,
       });
       console.log(response.data);
-
-      // 2, Login automático
+  
+      // 2. Login automático
       const loginResponse = await api.post("token/", {
         username,
         password,
       });
-
+  
       // 3. Guardar los tokens en localStorage
       localStorage.setItem("access", loginResponse.data.access);
       localStorage.setItem("refresh", loginResponse.data.refresh);
-
+  
       showToast("Usuario registrado y autenticado", "success");
-
+  
       // 4. Redirigir al usuario a la página de MessageList
       setTimeout(() => {
         navigate("/messages");
       }, 1500);
     } catch (err) {
       console.error(err);
-
+  
       if (err.response && err.response.data) {
         const errors = err.response.data;
-        Object.keys(errors).forEach((field) => {
-          const messages = errors[field];
-          messages.forEach((message) => {
-            showToast(`${field}: ${message}`, "danger");  
+  
+        if (typeof errors === "object" && errors !== null) {
+          Object.entries(errors).forEach(([field, messages]) => {
+            if (Array.isArray(messages)) {
+              messages.forEach((message) => {
+                showToast(`${field}: ${message}`, "danger");
+              });
+            } else {
+              showToast(`${field}: ${messages}`, "danger");
+            }
           });
-        });
+        } else {
+          showToast("Error inesperado: " + JSON.stringify(errors), "danger");
+        }
       } else {
         showToast("Error al registrar el usuario", "danger");
       }
