@@ -2,7 +2,12 @@
 import axios from "axios";
 
 // URL del backend
-const BASE_URL = "https://smspy-backend-pre.onrender.com/api/";
+// New (PythonAnywhere)
+const BASE_URL = "https://bguerradev.pythonanywhere.com/api/";
+
+// Old (Render)
+//const BASE_URL = "https://smspy-backend-pre.onrender.com/api/";
+
 
 // Obtenemos el token desde localStorage
 
